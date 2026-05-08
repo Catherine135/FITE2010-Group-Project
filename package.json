@@ -1,0 +1,30 @@
+{
+  "name": "05workspace",
+  "version": "1.0.0",
+  "description": "",
+  "main": "hardhat.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "compile": "HARDHAT_DISABLE_TELEMETRY_PROMPT=true npx hardhat compile",
+    "node": "HARDHAT_DISABLE_TELEMETRY_PROMPT=true npx hardhat node",
+    "deploy:local": "HARDHAT_DISABLE_TELEMETRY_PROMPT=true npx hardhat run scripts/deploy-local.js --network localhost",
+    "serve:web": "python3 -m http.server 8000",
+    "test": "HARDHAT_DISABLE_TELEMETRY_PROMPT=true npx hardhat test",
+    "test:focus": "HARDHAT_DISABLE_TELEMETRY_PROMPT=true npx hardhat test --grep \"change oracle|OracleChanged|relay|premium < collateral\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.1.2",
+    "@nomicfoundation/hardhat-ethers": "^3.1.3",
+    "@nomicfoundation/hardhat-network-helpers": "^1.1.2",
+    "chai": "^4.5.0",
+    "ethers": "^6.16.0",
+    "hardhat": "^2.28.6",
+    "hardhat-contract-sizer": "^2.10.1"
+  }
+}
