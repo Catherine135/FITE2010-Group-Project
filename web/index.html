@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elevator Option Console</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <h1>Elevator Option Console</h1>
+        <p>Connect wallet, inspect factory, and manage options end-to-end.</p>
+      </header>
+
+      <!-- ── 1. Connection ── -->
+      <section class="card">
+        <h2>Connection</h2>
+        <div class="row">
+          <button id="connectBtn">Connect MetaMask</button>
+          <button id="loadConfigBtn">Load Local Deployment</button>
+        </div>
+        <label>Factory Address</label>
+        <input id="factoryAddress" placeholder="0x..." />
+        <div class="meta" id="accountInfo">Wallet: not connected</div>
+      </section>
+
+      <!-- ── 2. Factory Read ── -->
+      <section class="card">
+        <h2>Factory Read</h2>
+        <div class="row">
+          <button id="readFactoryBtn">Read Rules</button>
+          <button id="listOptionsBtn">List Recent Options</button>
+        </div>
+        <pre id="factoryReadout">No data yet.</pre>
+      </section>
+
+      <!-- ── 3. Create Option ── -->
+      <section class="card">
+        <h2>Create Option</h2>
+        <div class="grid2">
+          <div>
+            <label>Type</label>
+            <select id="optionType">
+              <option value="0">CALL (0)</option>
+              <option value="1">PUT (1)</option>
+            </select>
+          </div>
+          <div>
+            <label>Strike Time (minutes)</label>
+            <input id="strikeTime" type="number" value="10" min="1" />
+          </div>
+          <div>
+            <label>Premium (PU)</label>
+            <input id="premium" type="number" value="100" min="1" />
+          </div>
+          <div>
+            <label>Collateral (PU)</label>
+            <input id="collateral" type="number" value="1000" min="1" />
+          </div>
+          <div>
+            <label>Duration (seconds)</label>
+            <input id="duration" type="number" value="604800" min="60" />
+          </div>
+          <div>
+            <label>Mint PU To Wallet (owner only)</label>
+            <input id="mintAmount" type="number" value="5000" min="1" />
+          </div>
+        </div>
+        <div class="row">
+          <button id="mintBtn">Mint PU</button>
+          <button id="createOptionBtn">Create Option</button>
+        </div>
+        <pre id="txLog">Ready.</pre>
+      </section>
+
+      <!-- ── 4. Option Inspector ── -->
+      <section class="card">
+        <h2>Option Inspector</h2>
+        <p class="meta">Paste any option contract address to inspect its full state. All actions below use this address.</p>
+        <label>Option Contract Address</label>
+        <div class="row">
+          <input id="optionAddress" placeholder="0x..." style="flex:1" />
+          <button id="loadOptionBtn">Load State</button>
+        </div>
+        <pre id="optionState">No option loaded yet.</pre>
+      </section>
+
+      <!-- ── 5. Writer Actions ── -->
+      <section class="card">
+        <h2>Writer Actions</h2>
+        <p class="meta">Step ①: After creating an option, approve and deposit collateral. Step ④: Cancel if no buyer. Step ⑦: Reclaim collateral after expiry if unexercised.</p>
+        <div class="row">
+          <button id="approveDepositBtn">① Approve + Deposit Collateral</button>
+          <button id="cancelUnboughtBtn">④ Cancel If Unbought</button>
+          <button id="retrieveExpiredBtn">⑦ Retrieve Expired</button>
+        </div>
+        <label>New Oracle Address (optional — admin/oracle relay can change before time is recorded)</label>
+        <div class="row">
+          <input id="newOracleAddress" placeholder="0x..." style="flex:1" />
+          <button id="changeOracleBtn">Change Oracle</button>
+        </div>
+        <pre id="writerLog">Ready.</pre>
+      </section>
+
+      <!-- ── 6. Buyer Actions ── -->
+      <section class="card">
+        <h2>Buyer Actions</h2>
+        <p class="meta">Step ②: Approve and pay premium to buy the option. Step ⑥: Exercise after oracle records actual time (if conditions met).</p>
+        <div class="row">
+          <button id="approveBuyBtn">② Approve + Buy Option</button>
+          <button id="exerciseBtn">⑥ Exercise Option</button>
+        </div>
+        <pre id="buyerLog">Ready.</pre>
+      </section>
+
+      <!-- ── 7. Admin / Oracle Actions ── -->
+      <section class="card">
+        <h2>Admin / Oracle Actions</h2>
+        <p class="meta">Step ⑤: After the option expires, the admin (factory deployer) records the actual elevator wait time. This triggers settlement.</p>
+        <label>Actual Wait Time (minutes)</label>
+        <input id="actualWaitTime" type="number" value="15" min="0" />
+        <div class="row" style="margin-top:10px">
+          <button id="recordTimeBtn">⑤ Record Actual Time</button>
+        </div>
+        <pre id="adminLog">Ready.</pre>
+      </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

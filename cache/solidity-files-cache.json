@@ -1,0 +1,116 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/zhaowenqi/14/1FITE2010/GP/05workspace/contracts/ElevatorOption.sol": {
+      "lastModificationDate": 1776508383580,
+      "contentHash": "2ac1f8032832a8e715b118a5bbcab3f2",
+      "sourceName": "contracts/ElevatorOption.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ElevatorOption",
+        "IERC20"
+      ]
+    },
+    "/Users/zhaowenqi/14/1FITE2010/GP/05workspace/contracts/ElevatorOptionFactory.sol": {
+      "lastModificationDate": 1776505908633,
+      "contentHash": "8221ee3291c3be640f51cc60d07bb97b",
+      "sourceName": "contracts/ElevatorOptionFactory.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ElevatorOption.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ElevatorOptionFactory"
+      ]
+    },
+    "/Users/zhaowenqi/14/1FITE2010/GP/05workspace/contracts/PrintToken.sol": {
+      "lastModificationDate": 1776504533963,
+      "contentHash": "b4c208ba5d17c256e7e3870092ebadc9",
+      "sourceName": "contracts/PrintToken.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "PrintToken"
+      ]
+    }
+  }
+}
