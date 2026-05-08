@@ -1,0 +1,49 @@
+**Project Overview**
+
+A decentralized "elevator waiting-time" option platform where users trade CALL/PUT options based on predicted waiting time, settled with the custom PU token.
+Implemented flow so far: create option -> writer deposits collateral -> buyer pays premium -> oracle records actual waiting time at expiry -> settlement by CALL/PUT rules -> writer retrieves collateral after grace period if not exercised.
+A skeleton interface for "cancel and refund if unbought" is included.
+
+**File Status and Completion**
+- PrintToken.sol: Simplified ERC20 (PU) is complete. Includes controlled mint, transfer, approve/transferFrom, and test minting. Mostly stable.
+- ElevatorOptionFactory.sol: Factory is implemented. It handles createOption, stores allOptions, and emits events. Possible additions: parameter bounds (duration/premium/collateral), creation fee/rate limit, admin transfer, batched queries.
+- ElevatorOption.sol: Core option logic is a runnable baseline, not an empty scaffold.
+  - Implemented: roles/params/state flags, events, deposit (writer collateral), buyOption (buyer premium), recordActualTime (oracle after expiry), exercise (CALL/PUT payout), retrieveExpired (writer retrieval after grace period).
+  - Covered edge cases: repeated deposit, repeated buy, exercise before expiry, exercise before time recording, repeated exercise, timeout retrieval, etc.
+  - Further hardening ideas: reentrancy protection, order cancellation (if unbought), oracle updates, richer event details, extreme-parameter checks, premium withdrawal/split strategy.
+- elevatorOption.test.js: Hardhat test skeleton with flow comments and TODOs for both scenarios (CALL > threshold, PUT < threshold).
+
+- Current contracts can run the base flow end-to-end: create -> deposit -> buyOption -> record actual time at expiry -> exercise / retrieveExpired.
+
+**Remix/Hardhat/Truffle Usability**
+- External function parameters are concise, and event coverage is suitable for frontend/script listeners.
+- Suggested interaction order (demo script / Remix):
+  1) Deploy PrintToken and mint test tokens to writer and buyer.
+  2) Deploy Factory and call createOption (strike/premium/collateral/duration/type).
+  3) Writer approves the new option contract, then calls deposit.
+  4) Buyer approves, then calls buyOption.
+  5) After expiry, oracle (factory deployer) calls recordActualTime.
+  6) Buyer calls exercise; if no exercise and grace period passes, writer calls retrieveExpired.
+
+**Team Split**
+- A (core contract security / cancellation logic)
+  - File: ElevatorOption.sol
+  - Tasks:
+    - Implement cancelIfUnbought (refund and finalize if unbought).
+    - Harden require checks/reentrancy/parameter bounds; optionally add oracle update, inactive-timeout cancel, and premium split strategy.
+  - Can run in parallel with B/C, but avoid simultaneous edits to the same file. If interface coordination with B is required, align first.
+- B (factory and token strategy)
+  - Files: ElevatorOptionFactory.sol, PrintToken.sol
+  - Tasks:
+    - Add creation fee/rate limit, duration/amount bounds, admin migration, and batched queries to factory.
+    - Optionally add mint permissions/quotas or one-time airdrop to token.
+  - Can run in parallel with A/C. If constructor or createOption interface changes, sync with A.
+- C (tests and demo scripts)
+  - File: elevatorOption.test.js
+  - Tasks:
+    - Complete CALL/PUT TODOs, assert balances/events/states, and add failure cases (exercise before expiry, before recording, repeated exercise, etc.).
+    - Add cancelIfUnbought tests after A finishes; complete scripts and verify interactions in Remix/Hardhat/Truffle, then keep key runtime screenshots.
+    - Finish README.
+  - Can complete existing-flow tests independently first, then add new cases after interface stabilization.
+
+Parallel recommendation: all three can proceed in parallel. If A/B modify shared interfaces (constructor params, events, function signatures), communicate first; C should add/adjust tests after interfaces are stable.
